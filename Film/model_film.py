@@ -7,7 +7,7 @@ class Model:
     def get_list_film(self):
         return self.film_list
 
-    def add_film(self, title, genre, director, year, duration, studio, actors:list):
+    def add_film(self, title, genre, director, year, duration, studio, actors:dict):
         data = {'Title: ': title, 'Genre: ': genre, 'Year: ': year, 'Duration: ': duration,'Studio: ':studio, 'Actors: ':actors}
         self.film_list.append(data)
 
