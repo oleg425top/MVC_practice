@@ -2,8 +2,12 @@ class Controller:
     def __init__(self, model):
         self.model = model
 
+    """Просматривать коллекцию может любой желающий"""
+
     def get_list_film(self):
         return self.model.get_list_film()
+
+    """Допустим добавлять фильмы в коллекцию может только админ"""
 
     def add_film(self, title, genre, director, year, duration, studio, actors: dict, user_roll):
         if user_roll == 'admin':
@@ -26,6 +30,8 @@ class Controller:
             return new_data
         else:
             return 'Список пуст'
+
+    """Запись в файл JSON"""
 
     def update_json(self, user_roll, filename):
         if user_roll == 'admin':
