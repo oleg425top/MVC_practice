@@ -12,7 +12,14 @@ class View:
     """Подборка фильмов по жанру"""
 
     def display_film_genre(self, genre):
-        print(self.controller.get_films_genre(genre))
+        data = self.controller.get_films_genre(genre)
+        for film in data:
+            print(film)
+
+    def display_film_from_title(self, title_to_search):
+        film = self.controller.get_film_from_title(title_to_search)
+        for key, value in film.items():
+            print(key,value)
 
     def display_update_json(self, user_roll, filename):
         print(self.controller.update_json(user_roll, filename))

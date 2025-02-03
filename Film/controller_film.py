@@ -16,6 +16,20 @@ class Controller:
         else:
             return 'Forbidden'
 
+    """Поиск фильма по названию"""
+
+    def get_film_from_title(self, title_to_search):
+        data = self.model.get_list_film()
+        if len(data) == 0:
+            return 'Список фильмов пуст'
+        else:
+            for film in data:
+                if film['Title: '] == title_to_search:
+                    print('Фильм найден')
+                    return film
+            return 'Такого фильма нет в списке'
+
+
     """Подборка фильмов по жанру"""
 
     def get_films_genre(self, genre):
