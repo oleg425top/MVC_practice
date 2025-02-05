@@ -4,7 +4,7 @@ import json
 class Model:
     list_of_articles = []
 
-    def __init__(self, title=None, author=None, char_count=None, publication=None, description=None ):
+    def __init__(self, title=None, author=None, char_count=None, publication=None, description=None):
         self.title = title
         self.author = author
         self.char_count = char_count
@@ -23,9 +23,10 @@ class Model:
             return None
         else:
             for article in Model.list_of_articles:
-                print(f'Статья: {article['title']}\nАвтор: {article['author']}\nОписание: {article['description']}')
-                print('.'*20)
-        # return Model.list_of_articles
+                print(
+                    f'Статья: {article['title']}\nАвтор: {article['author']}\nОписание: {article['description']}\n'
+                    f'Впервые опубликована в : {article['publication']}\nКоличество знаков в статье: {article['char_count']}')
+                print('.' * 20)
 
     def dump_to_json(self, filename):
         with open(fr'{filename}.json', 'w', encoding='utf-8') as file:
@@ -33,14 +34,6 @@ class Model:
 
     @classmethod
     def add_article(cls, title, author, char_count, publication, description):
-        article = {'title': title, 'author': author, 'char_count':char_count, 'publication':publication, 'description':description}
+        article = {'title': title, 'author': author, 'char_count': char_count, 'publication': publication,
+                   'description': description}
         Model.list_of_articles.append(article)
-
-
-
-# art = Model("Искусственный интеллект и будущее технологий", "Иван Иванов", 5000, "TechNews",
-#             "Статья рассматривает влияние искусственного интеллекта на развитие технологий и общества.")
-# art_2 = Model("Экологические проблемы современного мира", 'Мария Петрова', 6000, 'EcoLife',
-#               'Статья обсуждает основные экологические проблемы и пути их решения.')
-
-
