@@ -1,7 +1,7 @@
 from new_pizza import *
 
 if __name__ == '__main__':
-
+    order_manager = OrderManager()
     menu = Menu()
     admin = Admin(menu)
     menu.create_menu()
@@ -12,7 +12,8 @@ if __name__ == '__main__':
                 print("1. Добавить пиццу в меню")
                 print("2. Добавить топпинг в меню")
                 print("3. Просмотреть меню")
-                print("4. Выйти")
+                print("4. Просмотреть отчет о продажах")
+                print("5. Выйти")
                 choice = input("Выберите действие: ")
                 if choice == '1':
                     name = input("Введите название пиццы: ")
@@ -28,7 +29,10 @@ if __name__ == '__main__':
                     menu.print_menu()
                     menu.print_toppings()
                 elif choice == '4':
+                    print(order_manager.get_sales_report())
+                elif choice == '5':
                     break
+
                 else:
                     print('Данные не верны')
         elif user_chose == '1':
@@ -41,19 +45,23 @@ if __name__ == '__main__':
                         chose = input('Выберите пиццу и введите её номер, либо нажмите 0 для выхода')
                         if 0 <= int(chose) - 1 < len(menu.get_menu()):
                             order = Order(menu.get_menu()[int(chose) - 1])
-                            print(order.get_info())
+
+                            print(order.get_info_for_user())
                             while True:
                                 menu.print_toppings()
-                                chose2 = input('Выберите добавку и введите её номер, либо введите 0 если добавки не нужны')
-                                order.add_topping(menu.get_toppings(int(chose2)-1))
-                                print(order.get_info())
-                                if chose == '0':
+                                chose2 = input(
+                                    'Выберите добавку и введите её номер, либо введите 0 если добавки не нужны')
+                                if chose2 == '0':
                                     break
+                                else:
+                                    order.add_topping(menu.get_toppings(int(chose2) - 1))
+                                    print(order.get_info_for_user())
+                            order_manager.add_order(order)
                             order.save_order_to_file(order)
+
                         elif chose == '0':
                             print('Ваш заказ готов')
                             break
-                        #
                 elif chose == '2':
                     pass
                 else:

@@ -1,5 +1,28 @@
 import json
 
+""" Класс (Singleton) для управления заказами и финансовыми показателями. (Списал с ютуба)"""
+
+
+class OrderManager:
+    _instance = None
+
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super(OrderManager, cls).__new__(cls)
+            cls._instance.orders = []
+            cls._instance.total_sales = 0
+            cls._instance.total_revenue = 0
+        return cls._instance
+
+    def add_order(self, order):
+        self.orders.append(order)
+        self.total_sales += 1
+        self.total_revenue += order.price
+
+    def get_sales_report(self):
+        return f'Продано пицц: {self.total_sales}\nНа общую сумму: {self.total_revenue}'
+
+
 """Класс топингов"""
 
 
@@ -101,32 +124,33 @@ class Menu:
         self.add_toppings("Оливки", 100, 50)
 
 
-"""класс Заказ, который считает статистику заказов, сохраняет статистику в файл, и выводит информацию о заказе для юзера"""
+"""класс Заказ, который сохраняет статистику в файл, и выводит информацию о заказе для юзера"""
 
 
 class Order:
-    total_cost = []
-    total_count = []
 
     def __init__(self, pizza: Pizza):
         self.pizza = pizza
-        self.total_cost.append(self.pizza.price)
-        self.total_count.append(1)
+        self.price = pizza.price
 
     def add_topping(self, topping: Toppings):
         self.pizza.add_topping(topping)
 
-    def get_info(self):
+    def get_info_for_json(self):
         return {
             "pizza": self.pizza.name,
             "price": self.pizza.price,
             "weight": self.pizza.weight,
-            "toppings": [self.pizza.get_toppings()],
+            "toppings": self.pizza.get_toppings(),
         }
+
+    def get_info_for_user(self):
+        return (f'Вы заказали пиццу: {self.pizza.name}\nСтоимость вместе с добавками: {self.pizza.price} р.\nОбщий вес'
+                f' составил: {self.pizza.weight} грамм\n Добавки: {self.pizza.get_toppings()}')
 
     def save_order_to_file(self, order):
         with open("oleg_orders.json", "a", encoding='utf-8') as file:
-            json.dump(order.get_info(), file, ensure_ascii=False, indent=3)
+            json.dump(order.get_info_for_json(), file, ensure_ascii=False, indent=3)
             file.write("\n")
 
 
@@ -144,3 +168,8 @@ class Admin:
     def add_topping(self, name, price, weight):
         self.menu.add_toppings(name, price, weight)
         print('Топинг успешно добавлен!')
+
+    def display_sales_report(self):
+        report = OrderManager.get_sales_report()
+        print(f"Количество проданных пицц: {report['total_sales']}")
+        print(f"Общая выручка: {report['total_revenue']} рублей")
