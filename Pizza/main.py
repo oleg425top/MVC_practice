@@ -63,7 +63,15 @@ if __name__ == '__main__':
                             print('Ваш заказ готов')
                             break
                 elif chose == '2':
-                    pass
+                    name = input("Введите название пиццы: ")
+                    price = float(input("Введите цену пиццы: "))
+                    weight = int(input("Введите вес пиццы: "))
+                    pizza = Pizza(name, price, weight)
+                    order = Order(pizza)
+                    order_manager.add_order(order)
+                    order.save_order_to_file(order)
+                    print('Заказ принят')
+
                 else:
                     print('Данные не верны')
             elif chose == '2':

@@ -109,6 +109,8 @@ class Menu:
     def get_toppings(self, i: int):
         return self.toppings[i]
 
+
+
     """Создание меню с пиццами через фабрику пицц"""
 
     def create_menu(self):
@@ -135,6 +137,14 @@ class Order:
 
     def add_topping(self, topping: Toppings):
         self.pizza.add_topping(topping)
+
+    # def create_custom_pizza(self):
+    #     name = input("Введите название пиццы: ")
+    #     price = float(input("Введите цену пиццы: "))
+    #     weight = int(input("Введите вес пиццы: "))
+    #     pizza = PizzaFactory.create_pizza(name, price, weight)
+    #     print("Заказ оформлен!")
+    #     return pizza
 
     def get_info_for_json(self):
         return {
@@ -168,8 +178,3 @@ class Admin:
     def add_topping(self, name, price, weight):
         self.menu.add_toppings(name, price, weight)
         print('Топинг успешно добавлен!')
-
-    def display_sales_report(self):
-        report = OrderManager.get_sales_report()
-        print(f"Количество проданных пицц: {report['total_sales']}")
-        print(f"Общая выручка: {report['total_revenue']} рублей")
