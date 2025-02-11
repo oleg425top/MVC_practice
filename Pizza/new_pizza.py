@@ -1,5 +1,7 @@
 import json
 
+"""Класс топингов"""
+
 
 class Toppings:
     def __init__(self, name, price, weight):
@@ -11,10 +13,16 @@ class Toppings:
         return f'Ингридиент: {self.name}. Цена: {self.price} Вес: {self.weight}'
 
 
+"""Фабрика для создания топингов как для админа так и для юзера"""
+
+
 class ToppingsFactory:
     @staticmethod
     def create_topping(name, price, weight):
         return Toppings(name, price, weight)
+
+
+"""Класс самой пиццы"""
 
 
 class Pizza:
@@ -32,16 +40,23 @@ class Pizza:
     def get_toppings(self):
         if self.toppings:
             return f'{[topping.name for topping in self.toppings]}'
-        else: return f'Пусто'
+        else:
+            return f'Пусто'
 
     def __str__(self):
         return f"Название: {self.name}\nЦена: {self.price}\nВес: {self.weight}\n"
+
+
+"""Фабрика по созданию пиццы как для юзера так и для админа"""
 
 
 class PizzaFactory:
     @staticmethod
     def create_pizza(name, price, weight):
         return Pizza(name, price, weight)
+
+
+"""Класс меню который отвечает за вывод меню, и добавление в него пиццы и топингов"""
 
 
 class Menu:
@@ -86,6 +101,9 @@ class Menu:
         self.add_toppings("Оливки", 100, 50)
 
 
+"""класс Заказ, который считает статистику заказов, сохраняет статистику в файл, и выводит информацию о заказе для юзера"""
+
+
 class Order:
     total_cost = []
     total_count = []
@@ -112,6 +130,9 @@ class Order:
             file.write("\n")
 
 
+"""Класс админ для создания пиццы и топингов"""
+
+
 class Admin:
     def __init__(self, menu):
         self.menu = menu
@@ -123,17 +144,3 @@ class Admin:
     def add_topping(self, name, price, weight):
         self.menu.add_toppings(name, price, weight)
         print('Топинг успешно добавлен!')
-
-# t = Toppings('краб', 150, 50)
-# t2 = Toppings('Фрунчоза', 250, 50)
-# pizza_1 = Pizza("Маргарита", 350, 450)
-# pizza_2 = Pizza("Пепперони", 400, 500)
-# pizza_2.add_topping(t)
-# pizza_2.add_topping(t2)
-# pizza_3 = Pizza("Гавайская", 380, 480)
-# m = Menu()
-# m.create_menu()
-# m.add_pizza(pizza_1)
-# m.add_pizza(pizza_2)
-# m.add_pizza(pizza_3)
-# m.get_menu()
